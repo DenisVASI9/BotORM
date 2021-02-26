@@ -1,0 +1,4 @@
+.idea
+node_modules
+files/image-*
+config.json
