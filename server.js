@@ -45,7 +45,7 @@ const server = async () => {
     app.use(cors())
 
     router
-        .post('/api/message/analysis', async ctx => {
+        .post('/api/message/commercial', async ctx => {
             try {
                 await CommercialMessageSchema.validateAsync(ctx.request.body)
             } catch (error) {
@@ -56,17 +56,18 @@ const server = async () => {
                 const users = await User.find({})
                 users.map(user => {
                     bot.telegram.sendMessage(user.chatId, `
+                    Заявка на получение коммерческого предложения
                     Телефон: ${ctx.request.body.phone}
                     Email:  ${ctx.request.body.email}
                     Имя: ${ctx.request.body.name}
                     `)
                 })
-                return ctx.body = users
+                return ctx.body = "ok!"
             } catch (error) {
                 return ctx.body = error.message
             }
         })
-        .post('/api/message/commercial', async ctx => {
+        .post('/api/message/analysis', async ctx => {
             try {
                 await MessageSchema.validateAsync(ctx.request.body)
             } catch (error) {
@@ -76,7 +77,9 @@ const server = async () => {
             try {
                 const users = await User.find({})
                 users.map(user => {
-                    bot.telegram.sendMessage(user.chatId, `
+                    bot.telegram.sendMessage(user.chatId,
+                        `
+                        Заявка на анализ компании
                     Телефон: ${ctx.request.body.phone} 
                     Сообщение: ${ctx.request.body.message}
                     Имя: ${ctx.request.body.name}
@@ -86,7 +89,7 @@ const server = async () => {
                     Email: ${ctx.request.body.email}
                     `)
                 })
-                return ctx.body = users
+                return ctx.body = "ok!"
             } catch (error) {
                 return ctx.body = error.message
             }
